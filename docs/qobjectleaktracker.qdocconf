@@ -1,0 +1,26 @@
+project = QObjectLeakTracker
+module = QObjectLeakTracker
+version = 1.0.0
+
+headerdirs = ../src
+sourcedirs = ../src
+
+headers.fileextensions = "*.h"
+sources.fileextensions = "*.cpp"
+
+documentationinheaders = true
+moduleheader = QObjectLeakTracker.h
+
+depends = qtcore
+
+includepaths += ../src \
+                $QT_INSTALL_HEADERS \
+                $QT_INSTALL_HEADERS/QtCore
+
+outputdir = html
+outputformats = HTML
+
+HTML.stylesheets = $QT_INSTALL_DOCS/global/template/style/offline.css
+HTML.headerstyles = " \
+    <link rel=\"stylesheet\" type=\"text/css\" href=\"style/offline.css\" /> \
+"
