@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<!-- QObjectLeakTracker.h -->
+  <meta name="description" content="The QObjectLeakTracker class tracks leaked QObjects in Qt applications. shutdown.">
+  <title>QObjectLeakTracker Class | QObjectLeakTracker 1.0.0</title>
+     <link rel="stylesheet" type="text/css" href="style/offline.css" /> </head>
+<body>
+<li><a href="qobjectleaktracker-module.html" translate="no">QObjectLeakTracker</a></li>
+<li>QObjectLeakTracker</li>
+<div class="sidebar">
+<div class="toc">
+<h3 id="toc">Contents</h3>
+<ul>
+<li class="level1"><a href="#public-types">Public Types</a></li>
+<li class="level1"><a href="#static-public-members">Static Public Members</a></li>
+<li class="level1"><a href="#macros">Macros</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+<li class="level2"><a href="#basic-usage">Basic Usage</a></li>
+<li class="level2"><a href="#prefix-whitelist">Prefix whitelist</a></li>
+<li class="level2"><a href="#scope-helper">Scope Helper</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title" translate="no">QObjectLeakTracker Class</h1>
+<!-- $$$QObjectLeakTracker-brief -->
+<p>The QObjectLeakTracker class tracks leaked QObjects in Qt applications. shutdown. <a href="#details">More...</a></p>
+<!-- @@@QObjectLeakTracker -->
+<div class="table"><table class="alignedsummary requisites" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> Header:</td><td class="memItemRight bottomAlign"> <code translate="no">#include &lt;QObjectLeakTracker&gt;</code></td></tr>
+</table></div>
+<ul>
+<li><a href="qobjectleaktracker-members.html">List of all members, including inherited members</a></li>
+</ul>
+<h2 id="public-types">Public Types</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> class </td><td class="memItemRight bottomAlign"><b><a href="qobjectleaktracker-scope.html" translate="no">Scope</a></b></td></tr>
+</table></div>
+<h2 id="static-public-members">Static Public Members</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qobjectleaktracker.html#addPrefix" translate="no">addPrefix</a></b>(const QString &amp;<i>prefix</i>)</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qobjectleaktracker.html#install" translate="no">install</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> void </td><td class="memItemRight bottomAlign"><b><a href="qobjectleaktracker.html#printRemaining" translate="no">printRemaining</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> int </td><td class="memItemRight bottomAlign"><b><a href="qobjectleaktracker.html#remainingCount" translate="no">remainingCount</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> QMap&lt;QString, int&gt; </td><td class="memItemRight bottomAlign"><b><a href="qobjectleaktracker.html#snapshot" translate="no">snapshot</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> qint64 </td><td class="memItemRight bottomAlign"><b><a href="qobjectleaktracker.html#totalCreated" translate="no">totalCreated</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> qint64 </td><td class="memItemRight bottomAlign"><b><a href="qobjectleaktracker.html#totalDestroyed" translate="no">totalDestroyed</a></b>()</td></tr>
+</table></div>
+<h2 id="macros">Macros</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qobjectleaktracker.html#QLEAK_ASSERT_NO_ALLOC" translate="no">QLEAK_ASSERT_NO_ALLOC</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qobjectleaktracker.html#QLEAK_NO_ALLOC_SCOPE" translate="no">QLEAK_NO_ALLOC_SCOPE</a></b>()</td></tr>
+</table></div>
+<!-- $$$QObjectLeakTracker-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p>Object tracking is performed via Qt's private API and may not be stable between versions.</p>
+<p>Only used for debug builds. In release builds, all functions are no-ops.</p>
+<h3 id="basic-usage">Basic Usage</h3>
+<p>Call <a href="qobjectleaktracker.html#install" translate="no">install</a>() in <code translate="no">main()</code> before creating any QObjects:</p>
+<pre class="cpp" translate="no"><span class="type">int</span> main(<span class="type">int</span> argc<span class="operator">,</span> <span class="type">char</span> <span class="operator">*</span>argv<span class="operator">[</span><span class="operator">]</span>)
+{
+    <span class="type"><a href="qobjectleaktracker.html" translate="no">QObjectLeakTracker</a></span><span class="operator">::</span>install();
+
+    <span class="comment">//</span>
+    <span class="comment">// Your application code goes here.</span>
+    <span class="comment">//</span>
+
+    <span class="type"><a href="qobjectleaktracker.html" translate="no">QObjectLeakTracker</a></span><span class="operator">::</span>printRemaining();
+    <span class="keyword">return</span> <span class="number">0</span>;
+}</pre>
+<h3 id="prefix-whitelist">Prefix whitelist</h3>
+<p>By default, <a href="qobjectleaktracker.html#printRemaining" translate="no">printRemaining</a>() reports all QObjects, including Qt internals (QNetworkReply, QTimer, etc.) Add prefixes to limit reports to your own classes:</p>
+<pre class="cpp" translate="no"><span class="type"><a href="qobjectleaktracker.html" translate="no">QObjectLeakTracker</a></span><span class="operator">::</span>addPrefix(<span class="string">&quot;MyApp&quot;</span>);
+<span class="type"><a href="qobjectleaktracker.html" translate="no">QObjectLeakTracker</a></span><span class="operator">::</span>addPrefix(<span class="string">&quot;MyObjectType&quot;</span>);</pre>
+<p>Only classes whose names start with a registered prefix will appear in <a href="qobjectleaktracker.html#printRemaining" translate="no">printRemaining</a>(), <a href="qobjectleaktracker.html#snapshot" translate="no">snapshot</a>(), and <a href="qobjectleaktracker.html#remainingCount" translate="no">remainingCount</a>().</p>
+<h3 id="scope-helper">Scope Helper</h3>
+<p>Use the convenience macros to assert that a code block does not allocate any QObjects:</p>
+<pre class="cpp" translate="no">QLEAK_NO_ALLOC_SCOPE();
+<span class="comment">// ... code that should not create QObjects ...</span>
+QLEAK_ASSERT_NO_ALLOC();</pre>
+</div>
+<p><b>See also </b><a href="qobjectleaktracker-scope.html" translate="no">QObjectLeakTracker::Scope</a>.</p>
+<!-- @@@QObjectLeakTracker -->
+<div class="func">
+<h2>Member Function Documentation</h2>
+<!-- $$$addPrefix[overload1]$$$addPrefixconstQString& -->
+<h3 class="fn" translate="no" id="addPrefix"><code class="details extra" translate="no">[static]</code> <span class="type">void</span> QObjectLeakTracker::<span class="name">addPrefix</span>(const <span class="type">QString</span> &amp;<i>prefix</i>)</h3>
+<p>Registers <i translate="no">prefix</i> for class name whitelisting used in reporting.</p>
+<p>When at least one prefix has been registered, <a href="qobjectleaktracker.html#printRemaining" translate="no">printRemaining</a>(), <a href="qobjectleaktracker.html#snapshot" translate="no">snapshot</a>(), and <a href="qobjectleaktracker.html#remainingCount" translate="no">remainingCount</a>() will only consider objects whose <code translate="no">metaObject()-&gt;className()</code> starts with one of the registered prefixes.</p>
+<p>By default, the whitelist is empty and all QObject-derived classes will be reported, including Qt internal classes.</p>
+<pre class="cpp" translate="no"><span class="type"><a href="qobjectleaktracker.html" translate="no">QObjectLeakTracker</a></span><span class="operator">::</span>addPrefix(<span class="string">&quot;MyApp&quot;</span>);</pre>
+<p><b>See also </b><a href="qobjectleaktracker.html#printRemaining" translate="no">printRemaining</a>(), <a href="qobjectleaktracker.html#snapshot" translate="no">snapshot</a>(), and <a href="qobjectleaktracker.html#remainingCount" translate="no">remainingCount</a>().</p>
+<!-- @@@addPrefix -->
+<!-- $$$install[overload1]$$$install -->
+<h3 class="fn" translate="no" id="install"><code class="details extra" translate="no">[static]</code> <span class="type">void</span> QObjectLeakTracker::<span class="name">install</span>()</h3>
+<p>Installs the leak tracker by hooking into Qt's private API.</p>
+<p>Call this at the very beginning of <code translate="no">main()</code>, before constructing a QApplication or any other QObject.</p>
+<!-- @@@install -->
+<!-- $$$printRemaining[overload1]$$$printRemaining -->
+<h3 class="fn" translate="no" id="printRemaining"><code class="details extra" translate="no">[static]</code> <span class="type">void</span> QObjectLeakTracker::<span class="name">printRemaining</span>()</h3>
+<p>Prints a summary of all remaining (not yet destroyed) QObjects.</p>
+<p>The output includes a count of remaining objects and their type, depending on the log verbosity level.</p>
+<p>Output depends on whitelist.</p>
+<p><b>See also </b><a href="qobjectleaktracker.html#snapshot" translate="no">snapshot</a>(), <a href="qobjectleaktracker.html#remainingCount" translate="no">remainingCount</a>(), and <a href="qobjectleaktracker.html#addPrefix" translate="no">addPrefix</a>().</p>
+<!-- @@@printRemaining -->
+<!-- $$$remainingCount[overload1]$$$remainingCount -->
+<h3 class="fn" translate="no" id="remainingCount"><code class="details extra" translate="no">[static]</code> <span class="type">int</span> QObjectLeakTracker::<span class="name">remainingCount</span>()</h3>
+<p>Returns the number of tracked QObjects that have not been destroyed.</p>
+<p>Output depends on whitelist and build type (returns 0 in release builds.)</p>
+<p><b>See also </b><a href="qobjectleaktracker.html#snapshot" translate="no">snapshot</a>() and <a href="qobjectleaktracker.html#printRemaining" translate="no">printRemaining</a>().</p>
+<!-- @@@remainingCount -->
+<!-- $$$snapshot[overload1]$$$snapshot -->
+<h3 class="fn" translate="no" id="snapshot"><code class="details extra" translate="no">[static]</code> <span class="type">QMap</span>&lt;<span class="type">QString</span>, <span class="type">int</span>&gt; QObjectLeakTracker::<span class="name">snapshot</span>()</h3>
+<p>Returns a map from class name to instance count for all QObjects that have not been destroyed.</p>
+<p>Output depends on whitelist.</p>
+<p><b>See also </b><a href="qobjectleaktracker.html#remainingCount" translate="no">remainingCount</a>() and <a href="qobjectleaktracker.html#printRemaining" translate="no">printRemaining</a>().</p>
+<!-- @@@snapshot -->
+<!-- $$$totalCreated[overload1]$$$totalCreated -->
+<h3 class="fn" translate="no" id="totalCreated"><code class="details extra" translate="no">[static]</code> <span class="type">qint64</span> QObjectLeakTracker::<span class="name">totalCreated</span>()</h3>
+<p>Returns the total number of QObjects created. Note that this number does not take the whitelist into account.</p>
+<p><b>See also </b><a href="qobjectleaktracker.html#totalDestroyed" translate="no">totalDestroyed</a>().</p>
+<!-- @@@totalCreated -->
+<!-- $$$totalDestroyed[overload1]$$$totalDestroyed -->
+<h3 class="fn" translate="no" id="totalDestroyed"><code class="details extra" translate="no">[static]</code> <span class="type">qint64</span> QObjectLeakTracker::<span class="name">totalDestroyed</span>()</h3>
+<p>Returns the total number of QObjects destroyed. Note that this number does not take the whitelist into account.</p>
+<p><b>See also </b><a href="qobjectleaktracker.html#totalCreated" translate="no">totalCreated</a>().</p>
+<!-- @@@totalDestroyed -->
+</div>
+<div class="macros">
+<h2>Macro Documentation</h2>
+<!-- $$$QLEAK_ASSERT_NO_ALLOC[overload1]$$$QLEAK_ASSERT_NO_ALLOC -->
+<h3 class="fn" translate="no" id="QLEAK_ASSERT_NO_ALLOC"><span class="name">QLEAK_ASSERT_NO_ALLOC</span>()</h3>
+<p>Asserts that no QObjects have been created since the most recent <a href="qobjectleaktracker.html#QLEAK_NO_ALLOC_SCOPE" translate="no">QLEAK_NO_ALLOC_SCOPE</a>() in the same block. Triggers <code translate="no">Q_ASSERT</code> on failure.</p>
+<p><b>See also </b><a href="qobjectleaktracker.html#QLEAK_NO_ALLOC_SCOPE" translate="no">QLEAK_NO_ALLOC_SCOPE</a>() and <a href="qobjectleaktracker-scope.html" translate="no">QObjectLeakTracker::Scope</a>.</p>
+<!-- @@@QLEAK_ASSERT_NO_ALLOC -->
+<!-- $$$QLEAK_NO_ALLOC_SCOPE[overload1]$$$QLEAK_NO_ALLOC_SCOPE -->
+<h3 class="fn" translate="no" id="QLEAK_NO_ALLOC_SCOPE"><span class="name">QLEAK_NO_ALLOC_SCOPE</span>()</h3>
+<p>Declares a <a href="qobjectleaktracker-scope.html" translate="no">QObjectLeakTracker::Scope</a> variable for the current block. Use together with <a href="qobjectleaktracker.html#QLEAK_ASSERT_NO_ALLOC" translate="no">QLEAK_ASSERT_NO_ALLOC</a>() to verify that no QObjects are created within the block.</p>
+<p><b>See also </b><a href="qobjectleaktracker.html#QLEAK_ASSERT_NO_ALLOC" translate="no">QLEAK_ASSERT_NO_ALLOC</a>() and <a href="qobjectleaktracker-scope.html" translate="no">QObjectLeakTracker::Scope</a>.</p>
+<!-- @@@QLEAK_NO_ALLOC_SCOPE -->
+</div>
+</body>
+</html>

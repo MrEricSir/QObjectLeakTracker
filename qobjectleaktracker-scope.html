@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+<!-- QObjectLeakTracker.h -->
+  <meta name="description" content="Records QObject creation and destruction counts within a code block.">
+  <title>QObjectLeakTracker::Scope Class | QObjectLeakTracker 1.0.0</title>
+     <link rel="stylesheet" type="text/css" href="style/offline.css" /> </head>
+<body>
+<li><a href="qobjectleaktracker-module.html" translate="no">QObjectLeakTracker</a></li>
+<li>Scope</li>
+<div class="sidebar">
+<div class="toc">
+<h3 id="toc">Contents</h3>
+<ul>
+<li class="level1"><a href="#public-functions">Public Functions</a></li>
+<li class="level1"><a href="#details">Detailed Description</a></li>
+</ul>
+</div>
+<div class="sidebar-content" id="sidebar-content"></div></div>
+<h1 class="title" translate="no">QObjectLeakTracker::Scope Class</h1>
+<span class="small-subtitle" translate="no">class <a href="qobjectleaktracker-module.html" translate="no">QObjectLeakTracker</a>::Scope</span>
+<!-- $$$Scope-brief -->
+<p>Records QObject creation and destruction counts within a code block. <a href="#details">More...</a></p>
+<!-- @@@Scope -->
+<ul>
+<li><a href="qobjectleaktracker-scope-members.html">List of all members, including inherited members</a></li>
+</ul>
+<h2 id="public-functions">Public Functions</h2>
+<div class="table"><table class="alignedsummary" translate="no">
+<tr><td class="memItemLeft rightAlign topAlign"> </td><td class="memItemRight bottomAlign"><b><a href="qobjectleaktracker-scope.html#Scope" translate="no">Scope</a></b>()</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> qint64 </td><td class="memItemRight bottomAlign"><b><a href="qobjectleaktracker-scope.html#created" translate="no">created</a></b>() const</td></tr>
+<tr><td class="memItemLeft rightAlign topAlign"> qint64 </td><td class="memItemRight bottomAlign"><b><a href="qobjectleaktracker-scope.html#destroyed" translate="no">destroyed</a></b>() const</td></tr>
+</table></div>
+<!-- $$$Scope-description -->
+<div class="descr">
+<h2 id="details">Detailed Description</h2>
+<p>Construct a Scope on the stack to capture a baseline. Then call <a href="qobjectleaktracker-scope.html#created" translate="no">created</a>() and <a href="qobjectleaktracker-scope.html#destroyed" translate="no">destroyed</a>() to find out how many QObjects were allocated or freed since the Scope was constructed.</p>
+<pre class="cpp" translate="no">{
+    <span class="type"><a href="qobjectleaktracker.html" translate="no">QObjectLeakTracker</a></span><span class="operator">::</span>Scope scope;
+    <span class="keyword">auto</span> <span class="operator">*</span>obj <span class="operator">=</span> <span class="keyword">new</span> <span class="type">QObject</span>;
+    <span class="comment">// scope.created() == 1</span>
+    <span class="keyword">delete</span> obj;
+    <span class="comment">// scope.destroyed() == 1</span>
+}</pre>
+</div>
+<p><b>See also </b><a href="qobjectleaktracker-module.html" translate="no">QObjectLeakTracker</a>, <a href="qobjectleaktracker.html#QLEAK_NO_ALLOC_SCOPE" translate="no">QLEAK_NO_ALLOC_SCOPE</a>(), and <a href="qobjectleaktracker.html#QLEAK_ASSERT_NO_ALLOC" translate="no">QLEAK_ASSERT_NO_ALLOC</a>().</p>
+<!-- @@@Scope -->
+<div class="func">
+<h2>Member Function Documentation</h2>
+<!-- $$$Scope[overload1]$$$Scope -->
+<h3 class="fn" translate="no" id="Scope">Scope::<span class="name">Scope</span>()</h3>
+<p>Constructs a Scope, capturing the current cumulative created and destroyed counts as a baseline.</p>
+<!-- @@@Scope -->
+<!-- $$$created[overload1]$$$created -->
+<h3 class="fn" translate="no" id="created"><span class="type">qint64</span> Scope::<span class="name">created</span>() const</h3>
+<p>Returns the number of QObjects created since this Scope was constructed.</p>
+<!-- @@@created -->
+<!-- $$$destroyed[overload1]$$$destroyed -->
+<h3 class="fn" translate="no" id="destroyed"><span class="type">qint64</span> Scope::<span class="name">destroyed</span>() const</h3>
+<p>Returns the number of QObjects destroyed since this Scope was constructed.</p>
+<!-- @@@destroyed -->
+</div>
+</body>
+</html>
