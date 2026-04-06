@@ -1,6 +1,10 @@
 # QObjectLeakTracker
 
+[![Unit Tests](https://github.com/MrEricSir/QObjectLeakTracker/workflows/CI/badge.svg)](https://github.com/MrEricSir/QObjectLeakTracker/actions)
+
 A debug-only QObject leak detector for Qt 6 applications. Logs remaining objects when needed, for example at application shutdown. Useful for detecting certain types of leaks during development.
+
+For full details see [the documentation.](https://mrericsir.github.io/QObjectLeakTracker/qobjectleaktracker.html)
 
 Originally developed as part of [Fang](https://github.com/MrEricSir/Fang)
 
